@@ -1,17 +1,16 @@
 //Connect to Mongo database
 const mongoose = require("mongoose");
 mongoose.Promise = global.Promise;
-
+require("dotenv").config();
 //your local database url
 //27017 is the default mongoDB port
-const uri = process.env.MONGODB_URI;
 const mongooseConnectionOptions = {
   useNewUrlParser: true,
   useCreateIndex: true,
   useUnifiedTopology: true
 };
 
-mongoose.connect(uri, mongooseConnectionOptions).then(
+mongoose.connect(process.env.MONGODB_URI, mongooseConnectionOptions).then(
   () => {
     console.log("Connected to Mongo");
   },
