@@ -9,7 +9,6 @@ const MongoStore = require("connect-mongo")(session);
 const mongoose = require("mongoose");
 const passport = require("./passport");
 const app = express();
-const PORT = 8080;
 
 // Route requires
 const user = require("./routes/user");
@@ -44,6 +43,6 @@ app.use("/user", user);
 app.use("/link", link);
 
 // Starting Server
-app.listen(PORT, () => {
-  console.log(`App listening on PORT: ${PORT}`);
+app.listen(process.env.PORT || 5000, () => {
+  console.log('App listening');
 });
