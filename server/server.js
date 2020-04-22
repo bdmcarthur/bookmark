@@ -9,7 +9,6 @@ const MongoStore = require("connect-mongo")(session);
 const mongoose = require("mongoose");
 const passport = require("./passport");
 const app = express();
-const serveFavicon = require("serve-favicon");
 const path = require('path');
 // Route requires
 const user = require("./routes/user");
