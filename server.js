@@ -5,20 +5,20 @@ const expressSession = require("express-session");
 const cookieParser = require("cookie-parser");
 const MongoStore = require("connect-mongo")(session);
 const mongoose = require("mongoose");
-const passport = require("./passport");
+const passport = require("./server/passport");
 const app = express();
 const path = require('path');
 
 // Route requires
-const user = require("./routes/user");
-const link = require("./routes/link");
+const user = require("./server/routes/user");
+const link = require("./server/routes/link");
 
 // MIDDLEWARE
 app.use(morgan("dev"));
 app.use(cookieParser());
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
-app.use(express.static(path.join(__dirname, "app/client/build")));
+app.use(express.static(path.join(__dirname, "build")));
 // Sessions
 app.use(
   expressSession({
@@ -41,8 +41,8 @@ app.use(passport.session()); // calls the deserializeUser
 app.use("/user", user);
 app.use("/link", link);
 
-app.get('/*', function (req, res) {
-  res.sendFile(path.join(__dirname, 'app/client/build', 'index.html'));
+app.get('*', function (req, res) {
+  res.sendFile('index.html');
 });
 
 // Starting Server

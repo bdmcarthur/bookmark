@@ -21,7 +21,7 @@
   },
   "scripts": {
     "start": "node server/server.js",
-    "dev": "nodemon ./server/server.js",
+    "dev": "nodemon server.js",
     "heroku-postbuild": "cd client && npm install && npm run build"
   },
   "devDependencies": {
