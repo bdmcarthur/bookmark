@@ -58,7 +58,7 @@ class Home extends Component {
                 {this.state.listings.map((listing) => (
                   <div class="col-sm-4">
                     <h1>{listing.name}</h1>
-                    <ReactPlayer url={listing.link} width='100%' height='50%' />
+                    <ReactPlayer url={listing.link} width='100%' height='80%' />
                     <p>{listing.description}</p>
                   </div>
                 ))}

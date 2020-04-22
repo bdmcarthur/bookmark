@@ -42,6 +42,10 @@ app.use(passport.session()); // calls the deserializeUser
 app.use("/user", user);
 app.use("/link", link);
 
+app.get("*", (req, res, next) => {
+  res.sendFile(join(__dirname, "/client/build/index.html"));
+});
+
 // Starting Server
 app.listen(process.env.PORT || 5000, () => {
   console.log('App listening');
