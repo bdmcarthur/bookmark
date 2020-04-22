@@ -9,7 +9,8 @@ const MongoStore = require("connect-mongo")(session);
 const mongoose = require("mongoose");
 const passport = require("./passport");
 const app = express();
-
+const serveFavicon = require("serve-favicon");
+const path = require('path');
 // Route requires
 const user = require("./routes/user");
 const link = require("./routes/link");
@@ -19,7 +20,7 @@ app.use(morgan("dev"));
 app.use(cookieParser());
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
-
+app.use(express.static(path.join(__dirname, "/client/build")));
 // Sessions
 app.use(
   expressSession({
@@ -43,7 +44,7 @@ app.use("/user", user);
 app.use("/link", link);
 
 app.get("*", (req, res, next) => {
-  res.sendFile(join(__dirname, "/client/build/index.html"));
+  res.sendFile(path.join(__dirname, "/client/build/index.html"));
 });
 
 // Starting Server
