@@ -1,8 +1,6 @@
 const express = require("express");
-const bodyParser = require("body-parser");
 const morgan = require("morgan");
 const session = require("express-session");
-const dbConnection = require("./database");
 const expressSession = require("express-session");
 const cookieParser = require("cookie-parser");
 const MongoStore = require("connect-mongo")(session);
@@ -10,6 +8,7 @@ const mongoose = require("mongoose");
 const passport = require("./passport");
 const app = express();
 const path = require('path');
+
 // Route requires
 const user = require("./routes/user");
 const link = require("./routes/link");
@@ -19,7 +18,7 @@ app.use(morgan("dev"));
 app.use(cookieParser());
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
-app.use(express.static(path.join(__dirname, "/client/build")));
+app.use(express.static(path.join(__dirname, "app/client/build")));
 // Sessions
 app.use(
   expressSession({
@@ -43,7 +42,7 @@ app.use("/user", user);
 app.use("/link", link);
 
 app.get('/*', function (req, res) {
-  res.sendFile(path.join(__dirname, 'build', 'index.html'));
+  res.sendFile(path.join(__dirname, 'app/client/build', 'index.html'));
 });
 
 // Starting Server
