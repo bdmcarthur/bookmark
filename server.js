@@ -13,6 +13,7 @@ const path = require('path');
 // Route requires
 const user = require("./server/routes/user");
 const link = require("./server/routes/link");
+const board = require("./server/routes/board");
 
 // MIDDLEWARE
 app.use(morgan("dev"));
@@ -42,6 +43,7 @@ app.use(passport.session()); // calls the deserializeUser
 // Routes
 app.use("/user", user);
 app.use("/link", link);
+app.use("/board", board);
 
 app.get("*", (req, res, next) => {
   res.sendFile(path.join(__dirname, "/client/build/index.html"));

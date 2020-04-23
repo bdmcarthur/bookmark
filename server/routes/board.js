@@ -1,21 +1,18 @@
 const express = require("express");
 const router = express.Router();
-const Link = require("../database/models/link");
+const Board = require("../database/models/board");
 const passport = require("../passport");
 
 
 router.post("/add", (req, res, next) => {
-  const { link, name, description, board } = req.body;
-  console.log('kjlj', board)
-  Link.create({
-    link,
+  const { name, description } = req.body;
+  Board.create({
     name,
     description,
-    board,
     user: req.user
   })
-    .then(listing => {
-      res.json({ type: "success", data: { listing } });
+    .then(boards => {
+      res.json({ type: "success", data: { boards } });
     })
     .catch(error => {
       next(error);
@@ -24,9 +21,9 @@ router.post("/add", (req, res, next) => {
 
 router.get("/load", (req, res, next) => {
   let user = req.user
-  Link.find({ user: user })
-    .then(listing => {
-      res.json({ type: "success", data: { listing } });
+  Board.find({ user: user })
+    .then(boards => {
+      res.json({ type: "success", data: { boards } });
     })
     .catch(error => {
       next(error);

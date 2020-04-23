@@ -6,7 +6,9 @@ import LoginForm from "./Components/Login";
 import Navbar from "./Components/Navbar";
 import Home from "./Components/Home";
 import About from "./Components/About";
-import addForm from "./Components/addForm";
+import addLinkForm from "./Components/addLinkForm";
+import addBoardForm from "./Components/addBoardForm";
+import Board from "./Components/Board";
 
 class App extends Component {
   constructor() {
@@ -56,7 +58,9 @@ class App extends Component {
         }
         <Switch>
           <Route exact path="/" component={Home} />
-          <Route exact path="/add" component={addForm} />
+          <Route exact path="/:boardId/link/add" component={addLinkForm} />
+          <Route exact path="/board/add" component={addBoardForm} />
+          <Route exact path="/board/:id" component={Board} />
           <Route
             path="/login"
             render={() => <LoginForm updateUser={this.updateUser} />}

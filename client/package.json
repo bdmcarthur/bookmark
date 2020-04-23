@@ -29,6 +29,7 @@
     "nodemon": "^2.0.2"
   },
   "proxy": "http://localhost:8080",
+  "secure": false,
   "browserslist": {
     "production": [
       ">0.2%",

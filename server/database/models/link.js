@@ -9,6 +9,7 @@ const linkSchema = new Schema({
   name: { type: String, unique: false, required: true },
   description: { type: String, unique: false, required: true },
   user: { type: mongoose.Schema.Types.ObjectId, ref: "User" },
+  board: { type: mongoose.Schema.Types.ObjectId, ref: "Board" }
 });
 
 const Link = mongoose.model("Link", linkSchema);

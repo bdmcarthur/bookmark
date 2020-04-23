@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { Redirect } from "react-router-dom";
+import * as boardServices from "../services/board-services";
 import * as linkServices from "../services/link-services";
 import { Link } from "react-router-dom";
 import ReactPlayer from 'react-player'
@@ -7,15 +8,16 @@ class Home extends Component {
   constructor() {
     super();
     this.state = {
-      listings: null,
+      boards: null,
       redirectTo: null
     };
   }
 
   componentDidMount = () => {
-    linkServices.getLinks()
-      .then(listing => {
-        this.setState({ listings: listing.data.listing })
+    boardServices.getBoards()
+      .then(boards => {
+
+        this.setState({ boards: boards.data.boards })
       })
       .catch(error => {
         console.log(error)
@@ -45,21 +47,18 @@ class Home extends Component {
   };
 
   render() {
+
     if (this.state.redirectTo) {
       return <Redirect to={{ pathname: this.state.redirectTo }} />;
     } else {
       return (
         <div className="container">
-          <h4>Home</h4>
-          <Link to="/add">Add new link</Link>
-          {this.state.listings !== null &&
-            <div class="container">
+          {this.state.boards !== null &&
+            <div class="container mt-5">
               <div class="row">
-                {this.state.listings.map((listing) => (
+                {this.state.boards.map((board) => (
                   <div class="col-sm-4">
-                    <h1>{listing.name}</h1>
-                    <ReactPlayer url={listing.link} width='100%' height='80%' />
-                    <p>{listing.description}</p>
+                    <Link to={`/board/${board._id}`} class="card-title">{board.name}</Link>
                   </div>
                 ))}
               </div>
@@ -70,6 +69,8 @@ class Home extends Component {
     }
   }
 }
+
+
 
 export default Home;
 

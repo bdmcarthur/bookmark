@@ -1,25 +1,25 @@
 import axios from "axios";
 
-const linkAPI = axios.create({
-  baseURL: `/link`
+const boardAPI = axios.create({
+  baseURL: `/board`
 });
 
-export const addLink = ({ link, name, description, board }) =>
+export const addBoard = ({ name, description }) =>
   new Promise((resolve, reject) => {
-    linkAPI
-      .post("/add", { link, name, description, board })
+    boardAPI
+      .post("/add", { name, description })
       .then(response => {
-        const listing = response.data;
-        resolve(listing);
+        const newBoard = response.data;
+        resolve(newBoard);
       })
       .catch(error => {
         reject(error);
       });
   });
 
-export const getLinks = () =>
+export const getBoards = () =>
   new Promise((resolve, reject) => {
-    linkAPI
+    boardAPI
       .get("/load")
       .then(response => {
         const listing = response.data;

@@ -1,12 +1,11 @@
 import React, { Component } from "react";
-import * as linkServices from "../services/link-services";
+import * as boardServices from "../services/board-services";
 import { Redirect } from "react-router-dom";
 
-class addForm extends Component {
+class addBoardForm extends Component {
   constructor() {
     super();
     this.state = {
-      link: "",
       name: "",
       description: "",
       redirectTo: null,
@@ -21,9 +20,8 @@ class addForm extends Component {
 
   handleSubmit = event => {
     event.preventDefault();
-    const { link, name, description } = this.state;
-    linkServices.addLink({
-      link,
+    const { name, description } = this.state;
+    boardServices.addBoard({
       name,
       description
     })
@@ -40,22 +38,9 @@ class addForm extends Component {
       return <Redirect to={{ pathname: this.state.redirectTo }} />
     } else {
       return (
-        <div class='container'>
+        <div class='container mt-5'>
+          <h1 className="text-center">Add New Board</h1>
           <form>
-            <div className="form-group text-left">
-              <label htmlFor="link">Link</label>
-              <input
-                type="text"
-                className="form-control"
-                autoComplete="link"
-                id="link"
-                name="link"
-                aria-describedby="emailHelp"
-                value={this.state.link}
-                onChange={this.handleChange}
-              ></input>
-            </div>
-
             <div className="form-group text-left">
               <label htmlFor="name">Name</label>
               <input
@@ -91,4 +76,4 @@ class addForm extends Component {
 
 }
 
-export default addForm;
+export default addBoardForm;

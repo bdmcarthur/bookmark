@@ -48,14 +48,9 @@ class Navbar extends Component {
         >
           <span className="navbar-toggler-icon"></span>
         </button>
-        <div className="collapse navbar-collapse" id="navbarNav">
+        <div className="collapse navbar-collapse justify-content-end" id="navbarNav">
           {loggedIn ? (
             <ul className="navbar-nav">
-              <li className="nav-item">
-                <Link to="/about" className="btn btn-link text-secondary">
-                  <span className="text-secondary">About</span>
-                </Link>
-              </li>
               <li className="nav-item">
                 <Link
                   to="#"
@@ -81,7 +76,7 @@ class Navbar extends Component {
               </ul>
             )}
         </div>
-      </nav>
+      </nav >
 
     );
   }
