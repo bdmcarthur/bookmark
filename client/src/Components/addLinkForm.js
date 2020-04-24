@@ -10,6 +10,7 @@ class addLinkForm extends Component {
       name: "",
       description: "",
       redirectTo: null,
+      board: this.props.match.params.boardId
     };
   }
 
@@ -21,8 +22,7 @@ class addLinkForm extends Component {
 
   handleSubmit = event => {
     event.preventDefault();
-    const { link, name, description } = this.state;
-    const board = this.props.match.params.boardId;
+    const { link, name, description, board } = this.state;
     linkServices.addLink({
       link,
       name,
@@ -30,7 +30,7 @@ class addLinkForm extends Component {
       board
     })
       .then(listing => {
-        this.setState({ redirectTo: "/" })
+        this.setState({ redirectTo: `/board/${board}` })
       })
       .catch(error => {
         console.log(error)
@@ -43,7 +43,7 @@ class addLinkForm extends Component {
       return <Redirect to={{ pathname: this.state.redirectTo }} />
     } else {
       return (
-        <div class='container mt-5'>
+        <div class='container my-5 form-container'>
           <h1 className="text-center">Add new link</h1>
           <form>
             <div className="form-group text-left">
@@ -73,16 +73,18 @@ class addLinkForm extends Component {
                 onChange={this.handleChange}
               ></input>
             </div>
-
+            <label htmlFor="description">Description</label>
             <textarea id="description"
               name="description"
+              rows="4"
+              class="w-100"
               aria-describedby="emailHelp"
               value={this.state.description}
               onChange={this.handleChange}></textarea>
 
             <button
               type="submit"
-              className="btn btn-primary"
+              className="btn btn-warning d-block mx-auto mt-3"
               onClick={this.handleSubmit}
             >
               Add

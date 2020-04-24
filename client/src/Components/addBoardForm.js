@@ -38,7 +38,7 @@ class addBoardForm extends Component {
       return <Redirect to={{ pathname: this.state.redirectTo }} />
     } else {
       return (
-        <div class='container mt-5'>
+        <div class='container mt-5 form-container'>
           <h1 className="text-center">Add New Board</h1>
           <form>
             <div className="form-group text-left">
@@ -54,8 +54,10 @@ class addBoardForm extends Component {
                 onChange={this.handleChange}
               ></input>
             </div>
-
+            <label htmlFor="description">Description</label>
             <textarea id="description"
+              class="w-100"
+              rows="4"
               name="description"
               aria-describedby="emailHelp"
               value={this.state.description}
@@ -63,7 +65,7 @@ class addBoardForm extends Component {
 
             <button
               type="submit"
-              className="btn btn-primary"
+              className="btn btn-warning d-block mx-auto mt-3"
               onClick={this.handleSubmit}
             >
               Add

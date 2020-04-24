@@ -23,7 +23,6 @@
 }
 
 .navbar {
- 
   margin-top: auto;
   
 }
@@ -35,8 +34,65 @@
   align-items: flex-end;
 }
 
-@keyframes App-logo-spin {
-  from { transform: rotate(0deg); }
-  to { transform: rotate(360deg); }
+a {
+  color: inherit;
+  text-decoration: none;
+  color: inherit;
 }
 
+a:hover{
+  text-decoration: none;
+  color:black;
+}
+
+.board-card{
+  height: 150px;
+  background-color:#ffc192;
+  text-align: center;
+  border-radius: 40px;
+}
+
+
+.board-card a{
+position: relative;
+top: 40%;
+font-size: 1.5rem;
+}
+
+.fa-plus-circle {
+  color: #bae7d8;
+}
+
+.fa-coffee {
+  font-size: 1.5em;
+}
+
+textarea {
+  outline: none;
+  border-color:#d4ddda;
+}
+.form-container{
+width: 90%;
+}
+/* // Medium devices (tablets, 768px and up) */
+@media (min-width: 768px) {
+  .board-card{
+    height: 200px;
+  }
+
+  .board-card a{
+    font-size: 1.75rem;
+  }
+
+  .form-container{
+    width: 60%;
+    }
+}
+
+/* // Large devices (desktops, 992px and up) */
+@media (min-width: 992px) {
+}
+
+/* // Extra large devices (large desktops, 1200px and up) */
+@media (min-width: 1200px) {
+}

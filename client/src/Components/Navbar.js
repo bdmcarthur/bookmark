@@ -35,7 +35,7 @@ class Navbar extends Component {
 
       <nav className="navbar navbar-expand-lg navbar-light bg-light">
         <Link to="/" className="btn btn-link text-secondary">
-          <span className="text-secondary">Home</span>
+          <i class="fas fa-coffee"></i>
         </Link>
         <button
           className="navbar-toggler"

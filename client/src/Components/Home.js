@@ -53,12 +53,15 @@ class Home extends Component {
     } else {
       return (
         <div className="container">
+          <Link to="/board/add"><i class="fas fa-plus-circle fa-2x text-right d-block mt-5"></i></Link>
           {this.state.boards !== null &&
-            <div class="container mt-5">
+            <div class="container mt-4">
               <div class="row">
                 {this.state.boards.map((board) => (
-                  <div class="col-sm-4">
-                    <Link to={`/board/${board._id}`} class="card-title">{board.name}</Link>
+                  <div class="col-6 col-md-4 mt-4">
+                    <div class="board-card">
+                      <Link to={`/board/${board._id}`} class="h1">{board.name}</Link>
+                    </div>
                   </div>
                 ))}
               </div>

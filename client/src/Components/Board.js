@@ -33,14 +33,15 @@ class Home extends Component {
         <div className="container">
           {this.state.listings !== null &&
             <div class="container">
-              <Link to={`/${boardID}/link/add`} className="btn btn-link text-danger">Add new link </Link>
+              <Link to={`/${boardID}/link/add`}><i class="fas fa-plus-circle fa-2x text-right d-block mt-5"></i></Link>
               <div class="row">
                 {this.state.listings.map((listing) => (
-                  <div class="col-sm-4">
+                  <div class="col-6 col-md-4 mt-4">
                     <div class="card text-center border-0" style={{ width: "18rem" }}>
-                      <h4 class="card-title">{listing.name}</h4>
+
                       <ReactPlayer url={listing.link} width='100%' height='80%' />
                       <div class="card-body">
+                        <h4 class="card-title">{listing.name}</h4>
                         <p class="card-text">{listing.description}</p>
                       </div>
                     </div>
