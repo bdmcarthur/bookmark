@@ -5,14 +5,14 @@ const passport = require("../passport");
 
 
 router.post("/add", (req, res, next) => {
-  const { link, name, description, board } = req.body;
-  console.log('kjlj', board)
+  const { link, name, description, board, type } = req.body;
   Link.create({
     link,
     name,
     description,
     board,
-    user: req.user
+    user: req.user,
+    type
   })
     .then(listing => {
       res.json({ type: "success", data: { listing } });

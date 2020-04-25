@@ -71,9 +71,17 @@ textarea {
   outline: none;
   border-color:#d4ddda;
 }
+
 .form-container{
 width: 90%;
 }
+
+.image-card {
+  width: 100%;
+  border-radius: 12px;
+  max-height: 200px;
+}
+
 /* // Medium devices (tablets, 768px and up) */
 @media (min-width: 768px) {
   .board-card{

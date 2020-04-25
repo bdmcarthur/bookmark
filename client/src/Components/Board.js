@@ -17,7 +17,10 @@ class Home extends Component {
   componentDidMount = () => {
     linkServices.getLinks()
       .then(listing => {
-        this.setState({ listings: listing.data.listing })
+        let filtered = listing.data.listing.filter(item => item.board === this.props.match.params.id
+        )
+
+        this.setState({ listings: filtered })
       })
       .catch(error => {
         console.log(error)
@@ -34,12 +37,14 @@ class Home extends Component {
           {this.state.listings !== null &&
             <div class="container">
               <Link to={`/${boardID}/link/add`}><i class="fas fa-plus-circle fa-2x text-right d-block mt-5"></i></Link>
-              <div class="row">
+              <div class="row align-items-center">
                 {this.state.listings.map((listing) => (
                   <div class="col-6 col-md-4 mt-4">
-                    <div class="card text-center border-0" style={{ width: "18rem" }}>
-
-                      <ReactPlayer url={listing.link} width='100%' height='80%' />
+                    <div class="card text-center border-0" style={{ width: "100%" }}>
+                      {listing.type == 'video'
+                        ? <ReactPlayer url={listing.link} width='100%' height='190px' />
+                        : <img class="image-card" src={listing.link}></img>
+                      }
                       <div class="card-body">
                         <h4 class="card-title">{listing.name}</h4>
                         <p class="card-text">{listing.description}</p>

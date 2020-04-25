@@ -22,12 +22,22 @@ class addLinkForm extends Component {
 
   handleSubmit = event => {
     event.preventDefault();
+    let type = "link"
+    if (this.state.link.includes("youtube.com")) {
+      type = "video"
+    }
+    else if (this.state.link.includes("jpg") || this.state.link.includes("png")) {
+      type = "image"
+    }
+
     const { link, name, description, board } = this.state;
+
     linkServices.addLink({
       link,
       name,
       description,
-      board
+      board,
+      type
     })
       .then(listing => {
         this.setState({ redirectTo: `/board/${board}` })

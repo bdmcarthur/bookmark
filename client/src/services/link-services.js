@@ -4,10 +4,10 @@ const linkAPI = axios.create({
   baseURL: `/link`
 });
 
-export const addLink = ({ link, name, description, board }) =>
+export const addLink = ({ link, name, description, board, type }) =>
   new Promise((resolve, reject) => {
     linkAPI
-      .post("/add", { link, name, description, board })
+      .post("/add", { link, name, description, board, type })
       .then(response => {
         const listing = response.data;
         resolve(listing);
