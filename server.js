@@ -9,6 +9,7 @@ const logger = require("morgan");
 const flash = require('connect-flash');
 const user = require("./routes/userRoutes");
 const path = require('path');
+require("dotenv").config();
 
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());

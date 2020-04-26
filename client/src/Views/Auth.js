@@ -36,7 +36,8 @@ class Auth extends Component {
             user: user.data.user
           });
           console.log("log in successful");
-          window.location.href = '/profile';
+
+          this.props.history.push("/profile");
         }
         else if (user.data.message) {
           this.setState({
@@ -60,7 +61,7 @@ class Auth extends Component {
             user: user.data.user
           });
           console.log("log in successful");
-          window.location.href = '/profile';
+          this.props.history.push("/profile");
         } else {
           console.log("something went wrong :(")
           console.log(user.data);
