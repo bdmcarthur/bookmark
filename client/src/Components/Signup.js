@@ -63,7 +63,7 @@ class Signup extends Component {
 
     render() {
         return (
-            <div>
+            <div class="container">
                 <h2 className="loginTitle title-font">Signup</h2>
                 <hr />
                 {this.props.message ? (
