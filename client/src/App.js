@@ -1,10 +1,10 @@
 import React from "react";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
-import Home from "./pages/Home.js";
-import Profile from "./pages/Profile.js";
-import Auth from "./pages/Auth.js";
+import Home from "./pages/Home";
+import Profile from "./pages/Profile";
+import Auth from "./pages/Auth";
 import NoMatch from "./pages/NoMatch";
-import Navbar from "./components/Navbar.js";
+import Navbar from "./components/Navbar";
 
 function App() {
   return (
