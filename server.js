@@ -8,6 +8,7 @@ const passport = require("passport");
 const logger = require("morgan");
 const flash = require('connect-flash');
 const user = require("./routes/userRoutes");
+const path = require('path');
 
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
