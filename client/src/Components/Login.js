@@ -1,93 +1,31 @@
-import React, { Component } from "react";
-import { Redirect } from "react-router-dom";
-import * as AuthenticationServices from "../services/auth-services";
+import React from "react";
+import { Button, Form, FormGroup, Label, Input, Alert } from 'reactstrap';
+import { Link } from "react-router-dom";
 
-class LoginForm extends Component {
-  constructor() {
-    super();
-    this.state = {
-      username: "",
-      password: "",
-      redirectTo: null
-    };
-    this.handleSubmit = this.handleSubmit.bind(this);
-    this.handleChange = this.handleChange.bind(this);
-  }
-
-  handleChange(event) {
-    this.setState({
-      [event.target.name]: event.target.value
-    });
-  }
-
-  handleSubmit(event) {
-    event.preventDefault();
-    const { username, password } = this.state;
-    AuthenticationServices.logInService({
-      username,
-      password
-    })
-      .then(user => {
-        this.props.updateUser({
-          loggedIn: true,
-          user: user
-        });
-        this.setState({
-          redirectTo: "/"
-        });
-      })
-      .catch(error => {
-        console.log(error);
-      });
-  }
-
-  render() {
-    if (this.state.redirectTo) {
-      return <Redirect to={{ pathname: this.state.redirectTo }} />;
-    } else {
-      return (
-        <div className="container">
-          <h4>Login</h4>
-          <form>
-            <div className="form-group text-left">
-              <label htmlFor="username">Email address</label>
-              <input
-                type="email"
-                className="form-control"
-                id="username"
-                autoComplete="username"
-                name="username"
-                aria-describedby="emailHelp"
-                value={this.state.username}
-                onChange={this.handleChange}
-              ></input>
-            </div>
-
-            <div className="form-group text-left">
-              <label htmlFor="password">Password</label>
-              <input
-                type="password"
-                autoComplete="current-password"
-                className="form-control"
-                id="password"
-                name="password"
-                value={this.state.password}
-                onChange={this.handleChange}
-              ></input>
-            </div>
-
-            <button
-              type="submit"
-              className="btn btn-primary"
-              onClick={this.handleSubmit}
-            >
-              Login
-            </button>
-          </form>
+function Login(props) {
+    return (
+        <div className="loginBox">
+            <h2 className="loginTitle title-font">Login</h2>
+            <hr />
+            {props.message ? (
+                <Alert className="animated fadeIn" color="danger">{props.message}</Alert>
+            ) : (<></>)}
+            <Form>
+                <FormGroup>
+                    <Label for="username">Username</Label>
+                    <Input type="text" name="username" id="username" placeholder="username" value={props.username} onChange={props.handleInputChange} />
+                </FormGroup>
+                <FormGroup>
+                    <Label for="password">Password</Label>
+                    <Input type="password" name="password" id="password" placeholder="password" value={props.password} onChange={props.handleInputChange} />
+                </FormGroup>
+                <Button id="loginBtn" onClick={props.handleLogin} block>Login</Button>
+                <p className="signupLink">
+                    <Link to="/signup">Dont have an account?  Sign up here</Link>
+                </p>
+            </Form>
         </div>
-      );
-    }
-  }
+    );
 }
 
-export default LoginForm;
+export default Login;

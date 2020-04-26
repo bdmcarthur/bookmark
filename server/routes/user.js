@@ -21,7 +21,7 @@ router.post("/signup", (req, res) => {
       });
       newUser.save((err, savedUser) => {
         if (err) return res.json(err);
-        req.login(savedUser, function(err) {
+        req.login(savedUser, function (err) {
           if (err) {
             console.log(err);
           }
@@ -34,7 +34,7 @@ router.post("/signup", (req, res) => {
 
 router.post(
   "/login",
-  function(req, res, next) {
+  function (req, res, next) {
     next();
   },
   passport.authenticate("local"),
@@ -44,7 +44,7 @@ router.post(
 );
 
 router.get("/", (req, res, next) => {
-  console.log("===== user!!======");
+  console.log("this is get user");
   if (req.user) {
     res.json({ user: req.user });
   } else {

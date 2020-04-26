@@ -1,7 +1,6 @@
 const express = require("express");
 const router = express.Router();
 const Link = require("../database/models/link");
-const passport = require("../passport");
 
 
 router.post("/add", (req, res, next) => {

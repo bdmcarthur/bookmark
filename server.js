@@ -1,54 +1,47 @@
 const express = require("express");
-const morgan = require("morgan");
-const session = require("express-session");
-const dbConnection = require("./server/database");
-const expressSession = require("express-session");
-const cookieParser = require("cookie-parser");
-const MongoStore = require("connect-mongo")(session);
-const mongoose = require("mongoose");
-const passport = require("./server/passport");
 const app = express();
-const path = require('path');
+const PORT = process.env.PORT || 3001;
+const colors = require("colors");
+const mongoose = require("mongoose");
+const session = require("express-session");
+const passport = require("passport");
+const logger = require("morgan");
+const flash = require('connect-flash');
+const user = require("./routes/userRoutes");
 
-// Route requires
-const user = require("./server/routes/user");
-const link = require("./server/routes/link");
-const board = require("./server/routes/board");
-
-// MIDDLEWARE
-app.use(morgan("dev"));
-app.use(cookieParser());
+app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
-app.use(express.urlencoded({ extended: false }));
-app.use(express.static(path.join(__dirname, "/client/build")));
-
-// Sessions
-app.use(
-  expressSession({
-    secret: "secret123",
-    cookie: { maxAge: 60 * 60 * 24 * 1000 },
-    resave: true,
-    saveUninitialized: false,
-    store: new MongoStore({
-      mongooseConnection: mongoose.connection,
-      ttl: 24 * 60 * 60
-    })
-  })
-);
-
-// Passport
+app.use(logger("dev"));
+app.use(flash())
+app.use(express.static("public"));
+app.use(session({
+    secret: "keyboard cat",
+    resave: false,
+    saveUninitialized: true,
+    // cookie: { secure: true }
+}));
 app.use(passport.initialize());
-app.use(passport.session()); // calls the deserializeUser
+app.use(passport.session());
 
-// Routes
-app.use("/user", user);
-app.use("/link", link);
-app.use("/board", board);
 
-app.get("*", (req, res, next) => {
-  res.sendFile(path.join(__dirname, "/client/build/index.html"));
+if (process.env.NODE_ENV === "production") {
+    app.use(express.static("client/build"));
+}
+
+app.use("/users", user);
+
+app.use(function (req, res) {
+    res.sendFile(path.join(__dirname, "../client/build/index.html"));
 });
 
-app.listen(process.env.PORT || 5000, () => {
-  console.log('App listening');
+mongoose.connect(process.env.MONGODB_URI || "mongodb://localhost/react-auth-simple", { useNewUrlParser: true }, function (err) {
+    if (err) throw err;
+    console.log(`mongoose connection successful`.yellow);
+    app.listen(PORT, (err) => {
+        if (err) throw err;
+        console.log(`connected on port ${PORT}`.cyan)
+    });
 });
+
+
+

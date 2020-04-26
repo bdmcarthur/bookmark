@@ -1,14 +1,15 @@
 const express = require("express");
 const router = express.Router();
-const Board = require("../database/models/board");
+const subBoard = require("../database/models/subBoard");
+const passport = require("../passport");
 
 
 router.post("/add", (req, res, next) => {
-  const { name, description } = req.body;
-  Board.create({
+  const { name, description, board } = req.body;
+  subBoard.create({
     name,
     description,
-    user: req.user
+    board
   })
     .then(boards => {
       res.json({ type: "success", data: { boards } });
@@ -19,8 +20,8 @@ router.post("/add", (req, res, next) => {
 });
 
 router.get("/load", (req, res, next) => {
-  let user = req.user
-  Board.find({ user: user })
+  let board = req.board
+  subBoard.find({ board: board })
     .then(boards => {
       res.json({ type: "success", data: { boards } });
     })

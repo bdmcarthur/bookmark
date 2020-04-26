@@ -1,79 +1,28 @@
-import React, { Component } from "react";
-import { BrowserRouter, Route, Switch } from "react-router-dom";
-import axios from "axios";
-import Signup from "./Components/Signup";
-import LoginForm from "./Components/Login";
-import Navbar from "./Components/Navbar";
-import Home from "./Components/Home";
-import About from "./Components/About";
-import addLinkForm from "./Components/addLinkForm";
-import addBoardForm from "./Components/addBoardForm";
-import Board from "./Components/Board";
+import React from "react";
+import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
+import Home from "./pages/Home.js";
+import Profile from "./pages/Profile.js";
+import Auth from "./pages/Auth.js";
+import NoMatch from "./pages/NoMatch";
+import Navbar from "./components/Navbar.js";
 
-class App extends Component {
-  constructor() {
-    super();
-    this.state = {
-      loggedIn: false,
-      user: null,
-      loaded: false
-    };
-  }
-
-  componentDidMount = () => {
-    this.getUser();
-  };
-
-  updateUser = userObject => {
-    this.setState(userObject);
-  };
-
-  getUser = () => {
-    axios.get("/user/").then(response => {
-      if (response.data.user) {
-        this.setState({
-          loggedIn: true,
-          user: response.data.user,
-          loaded: true
-        });
-      } else {
-        this.setState({
-          loggedIn: false,
-          user: null,
-          loaded: true
-        });
-      }
-    });
-  };
-
-  render() {
-    return (
-      <BrowserRouter>
-        {this.state.loaded === true &&
-          <Navbar
-            updateUser={this.updateUser}
-            user={this.state.user}
-            loggedIn={this.state.loggedIn}
-          />
-        }
+function App() {
+  return (
+    <Router>
+      <>
+        <Navbar />
         <Switch>
           <Route exact path="/" component={Home} />
-          <Route exact path="/:boardId/link/add" component={addLinkForm} />
-          <Route exact path="/board/add" component={addBoardForm} />
-          <Route exact path="/board/:id" component={Board} />
-          <Route
-            path="/login"
-            render={() => <LoginForm updateUser={this.updateUser} />}
-          />
-          <Route
-            path="/signup"
-            render={() => <Signup updateUser={this.updateUser} />}
-          />
-          <Route path="/about" render={() => <About />} />
+          <Route exact path="/signup" render={(props) => <Auth {...props} action="signup" />} />
+          <Route exact path="/login" render={(props) => <Auth {...props} action="login" />} />
+          <Route exact path="/profile" component={Profile} />
+          <Route component={NoMatch} />
         </Switch>
-      </BrowserRouter>
-    );
-  }
+
+
+      </>
+    </Router>
+  );
 }
 
 export default App;
