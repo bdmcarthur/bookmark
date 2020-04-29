@@ -1,25 +1,25 @@
 import axios from "axios";
 
-const boardAPI = axios.create({
-  baseURL: `/board`,
+const collectionAPI = axios.create({
+  baseURL: `/collection`,
 });
 
-export const addBoard = ({ name, description, collections }) =>
+export const addCollection = ({ name }) =>
   new Promise((resolve, reject) => {
-    boardAPI
-      .post("/add", { name, description, collections })
+    collectionAPI
+      .post("/add", { name })
       .then((response) => {
-        const newBoard = response.data;
-        resolve(newBoard);
+        const newCollection = response.data;
+        resolve(newCollection);
       })
       .catch((error) => {
         reject(error);
       });
   });
 
-export const getBoards = () =>
+export const getCollections = () =>
   new Promise((resolve, reject) => {
-    boardAPI
+    collectionAPI
       .get("/load")
       .then((response) => {
         const listing = response.data;

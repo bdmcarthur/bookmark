@@ -4,7 +4,7 @@ import * as boardServices from "../services/board-services";
 import * as linkServices from "../services/link-services";
 import { Link } from "react-router-dom";
 import ReactPlayer from 'react-player'
-class Home extends Component {
+class Board extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -63,7 +63,7 @@ class Home extends Component {
 
 
 
-export default Home;
+export default Board;
 
 
 

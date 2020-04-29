@@ -9,18 +9,18 @@ const mongoose = require("mongoose");
 const passport = require("./server/passport");
 const app = express();
 const path = require('path');
-
+require("dotenv").config();
 // Route requires
 const user = require("./server/routes/user");
-const link = require("./server/routes/link");
+const post = require("./server/routes/post");
 const board = require("./server/routes/board");
-
+const collection = require("./server/routes/collection");
 // MIDDLEWARE
 app.use(morgan("dev"));
 app.use(cookieParser());
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
-app.use(express.static(path.join(__dirname, "/client/build")));
+app.use(express.static("public"));
 
 // Sessions
 app.use(
@@ -40,13 +40,18 @@ app.use(
 app.use(passport.initialize());
 app.use(passport.session()); // calls the deserializeUser
 
+if (process.env.NODE_ENV === "production") {
+  app.use(express.static("client/build"));
+}
+
 // Routes
 app.use("/user", user);
-app.use("/link", link);
+app.use("/post", post);
 app.use("/board", board);
+app.use("/collection", collection);
 
-app.get("*", (req, res, next) => {
-  res.sendFile(path.join(__dirname, "/client/build/index.html"));
+app.use(function (req, res) {
+  res.sendFile(path.join(__dirname, "../client/build/index.html"));
 });
 
 app.listen(process.env.PORT || 5000, () => {

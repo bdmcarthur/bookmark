@@ -1,13 +1,13 @@
 const express = require("express");
 const router = express.Router();
-const Link = require("../database/models/link");
+const Post = require("../database/models/post");
 const passport = require("../passport");
 
 
 router.post("/add", (req, res, next) => {
   const { link, name, description, board, type } = req.body;
-  Link.create({
-    link,
+  Post.create({
+    post,
     name,
     description,
     board,
@@ -24,7 +24,7 @@ router.post("/add", (req, res, next) => {
 
 router.get("/load", (req, res, next) => {
   let user = req.user
-  Link.find({ user: user })
+  Post.find({ user: user })
     .then(listing => {
       res.json({ type: "success", data: { listing } });
     })
