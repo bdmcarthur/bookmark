@@ -1,14 +1,14 @@
 const express = require("express");
-const app = express();
-const PORT = process.env.PORT || 3001;
-const colors = require("colors");
-const mongoose = require("mongoose");
+const morgan = require("morgan");
 const session = require("express-session");
-const passport = require("passport");
-const logger = require("morgan");
-const flash = require("connect-flash");
-const user = require("./routes/userRoutes");
-const path = require("path");
+const dbConnection = require("./server/database");
+const expressSession = require("express-session");
+const cookieParser = require("cookie-parser");
+const MongoStore = require("connect-mongo")(session);
+const mongoose = require("mongoose");
+const passport = require("./server/passport");
+const app = express();
+const path = require('path');
 require("dotenv").config();
 // Route requires
 const user = require("./server/routes/user");
@@ -31,14 +31,14 @@ app.use(
     saveUninitialized: false,
     store: new MongoStore({
       mongooseConnection: mongoose.connection,
-      ttl: 24 * 60 * 60,
-    }),
+      ttl: 24 * 60 * 60
+    })
   })
 );
 
 // Passport
 app.use(passport.initialize());
-app.use(passport.session());
+app.use(passport.session()); // calls the deserializeUser
 
 if (process.env.NODE_ENV === "production") {
   app.use(express.static("client/build"));
@@ -54,15 +54,6 @@ app.use(function (req, res) {
   res.sendFile(path.join(__dirname, "../client/build/index.html"));
 });
 
-mongoose.connect(
-  process.env.MONGODB_URI || "mongodb://localhost/react-auth-simple",
-  { useNewUrlParser: true },
-  function (err) {
-    if (err) throw err;
-    console.log(`mongoose connection successful`.yellow);
-    app.listen(PORT, (err) => {
-      if (err) throw err;
-      console.log(`connected on port ${PORT}`.cyan);
-    });
-  }
-);
+app.listen(process.env.PORT || 5000, () => {
+  console.log('App listening');
+});

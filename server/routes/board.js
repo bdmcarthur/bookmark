@@ -1,6 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const Board = require("../database/models/board");
+const passport = require("../passport");
 
 router.post("/add", (req, res, next) => {
   const { name, description, collections } = req.body;

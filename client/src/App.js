@@ -1,9 +1,8 @@
-import React from "react";
-import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
-import Home from "./Views/Home";
-import Profile from "./Views/Profile";
-import Auth from "./Views/Auth";
-import NoMatch from "./Views/NoMatch";
+import React, { Component } from "react";
+import { BrowserRouter, Route, Switch } from "react-router-dom";
+import axios from "axios";
+import Signup from "./Components/Signup";
+import LoginForm from "./Components/Login";
 import Navbar from "./Components/Navbar";
 import Home from "./Views/Home";
 import AddPostForm from "./Components/AddPostForm";
