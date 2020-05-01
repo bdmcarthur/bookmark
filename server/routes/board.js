@@ -20,9 +20,10 @@ router.post("/add", (req, res, next) => {
     });
 });
 
-router.get("/load", (req, res, next) => {
-  let user = req.user;
-  Board.find({ user: user })
+router.post("/load", (req, res, next) => {
+  let collection = req.body.collection;
+
+  Board.find({ collections: collection })
     .then((boards) => {
       res.json({ type: "success", data: { boards } });
     })

@@ -17,10 +17,10 @@ export const addBoard = ({ name, description, collections }) =>
       });
   });
 
-export const getBoards = () =>
+export const getBoards = ({ collection }) =>
   new Promise((resolve, reject) => {
     boardAPI
-      .get("/load")
+      .post("/load", { collection })
       .then((response) => {
         const boards = response.data;
         resolve(boards);

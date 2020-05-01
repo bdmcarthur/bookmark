@@ -13,8 +13,9 @@ class Collection extends Component {
   }
 
   componentDidMount = () => {
+    let collection = this.props.match.params.id;
     boardServices
-      .getBoards()
+      .getBoards({ collection })
       .then((boards) => {
         this.setState({ boards: boards.data.boards });
       })
