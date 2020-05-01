@@ -8,31 +8,27 @@ class Navbar extends Component {
     super(props);
   }
 
-  logout = event => {
+  logout = (event) => {
     event.preventDefault();
     AuthenticationServices.logOutService()
-      .then(response => {
+      .then((response) => {
         if (response.status === 200) {
           this.props.updateUser({
-            loggedIn: false,
-            user: null
+            user: null,
           });
           this.setState({
-            redirectTo: "/"
+            redirectTo: "/",
           });
         }
       })
-      .catch(error => {
+      .catch((error) => {
         console.log(error);
       });
   };
 
   render() {
-    let loggedIn = this.props.loggedIn;
-    let user = this.props.user || null;
-
+    let user = this.props.user;
     return (
-
       <nav className="navbar navbar-expand-lg navbar-light bg-light">
         <Link to="/" className="btn btn-link text-secondary">
           <i class="fas fa-coffee"></i>
@@ -48,8 +44,11 @@ class Navbar extends Component {
         >
           <span className="navbar-toggler-icon"></span>
         </button>
-        <div className="collapse navbar-collapse justify-content-end" id="navbarNav">
-          {loggedIn ? (
+        <div
+          className="collapse navbar-collapse justify-content-end"
+          id="navbarNav"
+        >
+          {user ? (
             <ul className="navbar-nav">
               <li className="nav-item">
                 <Link
@@ -62,22 +61,21 @@ class Navbar extends Component {
               </li>
             </ul>
           ) : (
-              <ul className="navbar-nav">
-                <li className="nav-item">
-                  <Link to="/signup" className="btn btn-link">
-                    <span className="text-secondary">Sign up</span>
-                  </Link>
-                </li>
-                <li className="nav-item">
-                  <Link to="/login" className="btn btn-link text-secondary">
-                    <span className="text-secondary">Login</span>
-                  </Link>
-                </li>
-              </ul>
-            )}
+            <ul className="navbar-nav">
+              <li className="nav-item">
+                <Link to="/signup" className="btn btn-link">
+                  <span className="text-secondary">Sign up</span>
+                </Link>
+              </li>
+              <li className="nav-item">
+                <Link to="/login" className="btn btn-link text-secondary">
+                  <span className="text-secondary">Login</span>
+                </Link>
+              </li>
+            </ul>
+          )}
         </div>
-      </nav >
-
+      </nav>
     );
   }
 }

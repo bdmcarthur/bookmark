@@ -8,7 +8,7 @@ class LoginForm extends Component {
     this.state = {
       username: "",
       password: "",
-      redirectTo: null
+      redirectTo: null,
     };
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleChange = this.handleChange.bind(this);
@@ -16,7 +16,7 @@ class LoginForm extends Component {
 
   handleChange(event) {
     this.setState({
-      [event.target.name]: event.target.value
+      [event.target.name]: event.target.value,
     });
   }
 
@@ -25,18 +25,18 @@ class LoginForm extends Component {
     const { username, password } = this.state;
     AuthenticationServices.logInService({
       username,
-      password
+      password,
     })
-      .then(user => {
+      .then((user) => {
         this.props.updateUser({
           loggedIn: true,
-          user: user
+          user: user,
         });
         this.setState({
-          redirectTo: "/"
+          redirectTo: "/",
         });
       })
-      .catch(error => {
+      .catch((error) => {
         console.log(error);
       });
   }
@@ -46,7 +46,7 @@ class LoginForm extends Component {
       return <Redirect to={{ pathname: this.state.redirectTo }} />;
     } else {
       return (
-        <div className="container">
+        <div className="container mt-4">
           <h4>Login</h4>
           <form>
             <div className="form-group text-left">

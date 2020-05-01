@@ -80,12 +80,6 @@ textarea {
   max-height: 200px;
 }
 
-.collection-form {
-  position: absolute;
-  top: 50px;
-  z-index: 3;
-}
-
 /* // Medium devices (tablets, 768px and up) */
 @media (min-width: 768px) {
   .board-card {

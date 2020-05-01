@@ -9,8 +9,8 @@ export const addBoard = ({ name, description, collections }) =>
     boardAPI
       .post("/add", { name, description, collections })
       .then((response) => {
-        const newBoard = response.data;
-        resolve(newBoard);
+        const board = response.data;
+        resolve(board);
       })
       .catch((error) => {
         reject(error);
@@ -22,8 +22,8 @@ export const getBoards = () =>
     boardAPI
       .get("/load")
       .then((response) => {
-        const listing = response.data;
-        resolve(listing);
+        const boards = response.data;
+        resolve(boards);
       })
       .catch((error) => {
         reject(error);

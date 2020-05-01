@@ -5,22 +5,20 @@ import Signup from "./Components/Signup";
 import LoginForm from "./Components/Login";
 import Navbar from "./Components/Navbar";
 import Home from "./Views/Home";
-import About from "./Components/About";
-import addLinkForm from "./Components/addLinkForm";
+import AddPostForm from "./Components/AddPostForm";
 import AddBoardForm from "./Components/AddBoardForm";
-import Board from "./Components/Board";
-import Collection from "./Components/Collection";
-import * as boardServices from "./services/board-services";
+import AddCollectionForm from "./Components/AddCollectionForm";
+import Board from "./Views/Board";
+import Collection from "./Views/Collection";
 import * as collectionServices from "./services/collection-services";
+
 class App extends Component {
   constructor() {
     super();
     this.state = {
-      loggedIn: false,
       user: null,
       loaded: false,
-      boards: null,
-      collections: null
+      collections: null,
     };
   }
 
@@ -28,87 +26,96 @@ class App extends Component {
     this.getUser();
   };
 
-  updateUser = userObject => {
+  updateUser = (userObject) => {
     this.setState(userObject);
   };
 
-  getBoards = () => {
-    boardServices.getBoards()
-      .then(boards => {
-  
-        this.setState({
-          boards: boards.data.boards
-        });
+  getCollections = () => {
+    collectionServices
+      .getCollections()
+      .then((collections) => {
+        if (collections.data.collections.length > 0) {
+          this.setState({
+            collections: collections.data.collections,
+          });
+        }
+        // else {
+        //   this.createDefaultCollection();
+        // }
       })
-      .catch(error => {
-        console.log(error)
+      .catch((error) => {
+        console.log(error);
       });
   };
 
-  getCollections = () => {
-    collectionServices.getCollections()
-      .then(collections => {
-  
-        this.setState({
-          collections: collections.data.collections
-        });
-      })
-      .catch(error => {
-        console.log(error)
-      });
-  };
+  // createDefaultCollection = () => {
+  //   let name = "My Collection";
+  //   collectionServices
+  //     .addCollection({ name })
+  //     .then((collections) => {
+  //       this.setState({
+  //         collections: collections.data.collections,
+  //       });
+  //     })
+  //     .catch((error) => {
+  //       console.log(error);
+  //     });
+  // };
 
   getUser = () => {
-    axios.get("/user/").then(response => {
+    axios.get("/user/").then((response) => {
       if (response.data.user) {
         this.setState({
-          loggedIn: true,
           user: response.data.user,
-          loaded: true
+          loaded: true,
         });
-        this.getBoards()
-        this.getCollections()
+        this.getCollections();
       } else {
         this.setState({
-          loggedIn: false,
           user: null,
-          loaded: true
+          loaded: true,
         });
       }
     });
-  }
+  };
 
   render() {
     return (
-      <BrowserRouter>
-        {this.state.loaded === true &&
-          <Navbar
-            updateUser={this.updateUser}
-            user={this.state.user}
-            loggedIn={this.state.loggedIn}
-          />
-        }
-        <Switch>
-          <Route
-            exact
-            path="/"
-            render={() => <Home user={this.state.user}/>}
-          />
-          <Route exact path="/:boardId/link/add" component={addLinkForm} />
-          <Route exact path='/board/add' render={(props) => <AddBoardForm {...props} collections={this.state.collections}/>} />
-          <Route exact path="/board/:id" component={Board} />
-          <Route exact path="/collection/:id" component={Collection} />
-          <Route
-            path="/login"
-            render={() => <LoginForm updateUser={this.updateUser} />}
-          />
-          <Route
-            path="/signup"
-            render={() => <Signup updateUser={this.updateUser} />}
-          />
-          <Route path="/about" render={() => <About />} />
-        </Switch>
-      </BrowserRouter>
+      this.state.loaded === true && (
+        <BrowserRouter>
+          <Navbar updateUser={this.updateUser} user={this.state.user} />
+          <Switch>
+            <Route
+              exact
+              path="/"
+              render={() => <Home user={this.state.user} />}
+            />
+            <Route exact path={`/:boardId/post/add`} component={AddPostForm} />
+            <Route
+              exact
+              path={`/:collectionID/board/add`}
+              render={(props) => (
+                <AddBoardForm {...props} collections={this.state.collections} />
+              )}
+            />
+            <Route exact path={`/board/:id`} component={Board} />
+            <Route
+              exact
+              path={`/collection/add`}
+              component={AddCollectionForm}
+            />
+            <Route exact path={`/collection/:id`} component={Collection} />
+            <Route
+              path="/login"
+              render={() => <LoginForm updateUser={this.updateUser} />}
+            />
+            <Route
+              path="/signup"
+              render={() => <Signup updateUser={this.updateUser} />}
+            />
+          </Switch>
+        </BrowserRouter>
+      )
     );
   }
 }

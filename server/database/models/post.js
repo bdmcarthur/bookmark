@@ -5,11 +5,10 @@ mongoose.promise = Promise;
 
 // Define userSchema
 const postSchema = new Schema({
-  link: { type: String, required: true },
+  link: { type: String, required: true, unique: false },
   name: { type: String, required: true },
-  description: { type: String, required: true },
+  description: { type: String, required: false },
   board: { type: mongoose.Schema.Types.ObjectId, ref: "Board" },
-  type: { type: String, required: true }
 });
 
 const Post = mongoose.model("Post", postSchema);

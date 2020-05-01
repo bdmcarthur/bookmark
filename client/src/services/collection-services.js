@@ -22,8 +22,8 @@ export const getCollections = () =>
     collectionAPI
       .get("/load")
       .then((response) => {
-        const listing = response.data;
-        resolve(listing);
+        const collections = response.data;
+        resolve(collections);
       })
       .catch((error) => {
         reject(error);

@@ -10,34 +10,34 @@ class Signup extends Component {
       password: "",
       confirmPassword: "",
       name: "",
-      redirectTo: null
+      redirectTo: null,
     };
   }
 
-  handleChange = event => {
+  handleChange = (event) => {
     this.setState({
-      [event.target.name]: event.target.value
+      [event.target.name]: event.target.value,
     });
   };
 
-  handleSubmit = event => {
+  handleSubmit = (event) => {
     event.preventDefault();
     const { username, password, name } = this.state;
     AuthenticationServices.signUpService({
       username,
       password,
-      name
+      name,
     })
-      .then(user => {
+      .then((user) => {
         this.props.updateUser({
           loggedIn: true,
-          user: user
+          user: user,
         });
         this.setState({
-          redirectTo: "/"
+          redirectTo: "/",
         });
       })
-      .catch(error => {
+      .catch((error) => {
         console.log(error);
       });
   };
@@ -47,7 +47,7 @@ class Signup extends Component {
       return <Redirect to={{ pathname: this.state.redirectTo }} />;
     } else {
       return (
-        <div className="container">
+        <div className="container mt-4">
           <h4>Sign up</h4>
           <form>
             <div className="form-group text-left">

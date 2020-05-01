@@ -1,8 +1,8 @@
 import React, { Component } from "react";
-import * as linkServices from "../services/link-services";
+import * as postServices from "../services/post-services";
 import { Redirect } from "react-router-dom";
 
-class addLinkForm extends Component {
+class AddPostForm extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -10,54 +10,56 @@ class addLinkForm extends Component {
       name: "",
       description: "",
       redirectTo: null,
-      board: this.props.match.params.boardId
     };
   }
 
-  handleChange = event => {
+  handleChange = (event) => {
     this.setState({
-      [event.target.name]: event.target.value
+      [event.target.name]: event.target.value,
     });
   };
 
-  handleSubmit = event => {
+  handleSubmit = (event) => {
     event.preventDefault();
-    let type = "link"
+    let type = "link";
     if (this.state.link.includes("youtube.com")) {
-      type = "video"
-    }
-    else if (this.state.link.includes("jpg") || this.state.link.includes("png")) {
-      type = "image"
+      type = "video";
+    } else if (
+      this.state.link.includes("jpg") ||
+      this.state.link.includes("png")
+    ) {
+      type = "image";
     }
 
-    const { link, name, description, board } = this.state;
-
-    linkServices.addLink({
-      link,
-      name,
-      description,
-      board,
-      type
-    })
-      .then(listing => {
-        this.setState({ redirectTo: `/board/${board}` })
+    let { link, name, description } = this.state;
+    let board = this.props.match.params.boardId;
+    postServices
+      .addPost({
+        link,
+        name,
+        description,
+        board,
       })
-      .catch(error => {
-        console.log(error)
+      .then((post) => {
+        this.setState({
+          redirectTo: `/board/${board}`,
+        });
+      })
+      .catch((error) => {
+        console.log(error);
       });
   };
 
   render() {
-
     if (this.state.redirectTo) {
-      return <Redirect to={{ pathname: this.state.redirectTo }} />
+      return <Redirect to={{ pathname: this.state.redirectTo }} />;
     } else {
       return (
-        <div class='container my-5 form-container'>
-          <h1 className="text-center">Add new link</h1>
+        <div class="container my-5 form-container">
+          <h1 className="text-center">Add new post</h1>
           <form>
             <div className="form-group text-left">
-              <label htmlFor="link">Link</label>
+              <label htmlFor="link">Image Link</label>
               <input
                 type="text"
                 className="form-control"
@@ -84,13 +86,15 @@ class addLinkForm extends Component {
               ></input>
             </div>
             <label htmlFor="description">Description</label>
-            <textarea id="description"
+            <textarea
+              id="description"
               name="description"
               rows="4"
               class="w-100"
               aria-describedby="emailHelp"
               value={this.state.description}
-              onChange={this.handleChange}></textarea>
+              onChange={this.handleChange}
+            ></textarea>
 
             <button
               type="submit"
@@ -101,10 +105,9 @@ class addLinkForm extends Component {
             </button>
           </form>
         </div>
-      )
+      );
     }
   }
-
 }
 
-export default addLinkForm;
+export default AddPostForm;
