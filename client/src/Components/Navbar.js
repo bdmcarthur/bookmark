@@ -1,12 +1,8 @@
-import React, { Component } from "react";
+import React, { Component } from "react"
+import API from "../services/API";
 import { Link } from "react-router-dom";
-import "../App.css";
-import * as AuthenticationServices from "../services/auth-services";
 
 class Navbar extends Component {
-  constructor(props) {
-    super(props);
-  }
 
   logout = (event) => {
     event.preventDefault();

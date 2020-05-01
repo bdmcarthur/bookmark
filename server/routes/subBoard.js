@@ -1,31 +1,31 @@
 const express = require("express");
 const router = express.Router();
-const Board = require("../database/models/board");
+const subBoard = require("../database/models/subBoard");
+const passport = require("../passport");
+
 
 router.post("/add", (req, res, next) => {
-  const { name, description, collections } = req.body;
-  console.log(req.body);
-  Board.create({
+  const { name, description, board } = req.body;
+  subBoard.create({
     name,
     description,
-    collections,
-    user: req.user,
+    board
   })
-    .then((boards) => {
+    .then(boards => {
       res.json({ type: "success", data: { boards } });
     })
-    .catch((error) => {
+    .catch(error => {
       next(error);
     });
 });
 
 router.get("/load", (req, res, next) => {
-  let user = req.user;
-  Board.find({ user: user })
-    .then((boards) => {
+  let board = req.board
+  subBoard.find({ board: board })
+    .then(boards => {
       res.json({ type: "success", data: { boards } });
     })
-    .catch((error) => {
+    .catch(error => {
       next(error);
     });
 });

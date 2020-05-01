@@ -1,6 +1,6 @@
-import React, { Component } from "react";
-import { Redirect } from "react-router-dom";
-import * as AuthenticationServices from "../services/auth-services";
+import React from "react"
+import { Button, Form, FormGroup, Label, Input, Alert } from 'reactstrap';
+import { Link } from "react-router-dom";
 
 class LoginForm extends Component {
   constructor() {
@@ -85,9 +85,7 @@ class LoginForm extends Component {
             </button>
           </form>
         </div>
-      );
-    }
-  }
+    );
 }
 
-export default LoginForm;
+export default Login;
