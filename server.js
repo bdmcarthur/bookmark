@@ -8,7 +8,7 @@ const MongoStore = require("connect-mongo")(session);
 const mongoose = require("mongoose");
 const passport = require("./server/passport");
 const app = express();
-const path = require('path');
+const path = require("path");
 require("dotenv").config();
 // Route requires
 const user = require("./server/routes/user");
@@ -31,8 +31,8 @@ app.use(
     saveUninitialized: false,
     store: new MongoStore({
       mongooseConnection: mongoose.connection,
-      ttl: 24 * 60 * 60
-    })
+      ttl: 24 * 60 * 60,
+    }),
   })
 );
 
@@ -50,10 +50,10 @@ app.use("/post", post);
 app.use("/board", board);
 app.use("/collection", collection);
 
-app.use(function (req, res) {
-  res.sendFile(path.join(__dirname, "../client/build/index.html"));
+app.get("*", (req, res, next) => {
+  res.sendFile(path.join(__dirname, "/client/build/index.html"));
 });
 
 app.listen(process.env.PORT || 5000, () => {
-  console.log('App listening');
+  console.log("App listening");
 });
